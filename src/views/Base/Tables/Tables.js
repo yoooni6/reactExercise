@@ -2,17 +2,26 @@ import React, { Component } from 'react';
 import {
   Card, CardBody, CardHeader, Col,
   // Pagination, PaginationItem, PaginationLink, 
-  Row, Table
+  Row, Table, Input
 } from 'reactstrap';
 import { withRouter } from 'react-router-dom'
 import { inject, observer } from 'mobx-react';
 
 import PaginationCustom from './Pagination'
+import MyAutofocusInput from './MyAutofocusInput'
+import CustomModal from './CustomModal'
 
 
 const RenderRow = (props) => {
+  
   return props.keys.map((key, index) => {
-    return <td key={props.data[key]}>{props.data[key]}</td>
+    if (props.indexId === 0 && key === 'slug') {
+      return <MyAutofocusInput />
+
+    } else {
+      return <td key={props.data[key]}>{props.data[key]}</td>
+    }
+    
   })
 }
 
@@ -41,7 +50,7 @@ class Tables extends Component {
     const items = this.props.tableStore.currentData;
     const keys = this.getKeys();
     return items.map((row, index) => {
-      return <tr key={index}><RenderRow key={index} data={row} keys={keys} /></tr>
+      return <tr key={index}><RenderRow key={index} data={row} keys={keys} indexId={index}/></tr>
     })
   }
 
@@ -73,6 +82,7 @@ class Tables extends Component {
             <Card>
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Combined All Table
+                <CustomModal />
               </CardHeader>
               <CardBody>
                 <Table hover bordered striped responsive size="sm">

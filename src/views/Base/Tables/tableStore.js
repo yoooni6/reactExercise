@@ -7,11 +7,17 @@ export class tableStore {
     @observable currentData= []
     @observable currentPage= 1
     
-    pageLimit= 1
+    pageLimit= 16
     totalRecords = 0
     totalPages= 0
     pageNeighbours = 1
     spillYn = false
+
+    @observable visible = false
+
+    @action setVisible(visible) {
+        this.visible = visible
+    }
 
     @action setAllData() {
         this.allData = agent.searchData()    
